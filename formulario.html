@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Cursos</title>
+    <style>
+        :root{font-family:system-ui,Segoe UI,Roboto,Arial;--accent:#2b7cff;--muted:#666}
+        body{margin:0;padding:24px;background:#f5f7fb;color:#222}
+        .container{max-width:900px;margin:0 auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 6px 18px rgba(29,31,33,0.06)}
+        h1{margin:0 0 12px;font-size:22px}
+        form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+        input[type="text"],input[type="number"],input[type="date"],select,textarea,input[type="file"]{width:100%;padding:8px 10px;border:1px solid #d6dbe6;border-radius:6px;background:#fff;font-size:14px}
+        textarea{min-height:100px;resize:vertical}
+        .full{grid-column:1 / -1}
+        .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+        button{padding:10px 14px;border-radius:6px;border:0;cursor:pointer;font-weight:600}
+        .btn-primary{background:var(--accent);color:#fff}
+        .btn-ghost{background:#f0f3ff;color:var(--accent);border:1px solid #e4e9ff}
+        .hint{font-size:12px;color:#8a93a8;margin-top:6px}
+        .row{display:flex;gap:12px}
+        .tag-input{display:flex;gap:8px;flex-wrap:wrap;padding:6px;border:1px dashed #e1e6f0;border-radius:6px}
+        .tag{background:#eef4ff;color:var(--accent);padding:4px 8px;border-radius:999px;font-size:13px}
+        .error{color:#b00020;font-size:13px;margin-top:6px}
+        @media (max-width:700px){form{grid-template-columns:1fr}}
+    </style>
+</head>
+    <div class="container">
+        <h1>Formulario de cursos</h1>
+        <p class="hint">Rellena la información del curso. Los campos marcados con * son obligatorios.</p>
+
+        <form id="courseForm" novalidate>
+            <div class="full">
+                <label for="title">Título del curso *</label>
+                <input type="text" id="title" name="title" required placeholder="Ej. Introducción a Python">
+            </div>
+
+            <div>
+                <label for="code">Código</label>
+                <input type="text" id="code" name="code" placeholder="Ej. PY101">
+            </div>
+
+            <div>
+                <label for="category">Categoría *</label>
+                <select id="category" name="category" required>
+                    <option value="">-- Selecciona una categoría --</option>
+                    <option>Programación</option>
+                    <option>Matemáticas</option>
+                    <option>Diseño</option>
+                    <option>Idiomas</option>
+                    <option>Negocios</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="level">Nivel *</label>
+                <select id="level" name="level" required>
+                    <option value="">-- Nivel --</option>
+                    <option>Principiante</option>
+                    <option>Intermedio</option>
+                    <option>Avanzado</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="instructor">Instructor *</label>
+                <input type="text" id="instructor" name="instructor" required placeholder="Nombre del instructor">
+            </div>
+
+            <div>
+                <label for="mode">Modalidad</label>
+                <select id="mode" name="mode">
+                    <option>Presencial</option>
+                    <option>Online</option>
+                    <option>Híbrido</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="start">Fecha de inicio *</label>
+                <input type="date" id="start" name="start" required>
+            </div>
+
+            <div>
+                <label for="end">Fecha de fin</label>
+                <input type="date" id="end" name="end">
+            </div>
+
+            <div>
+                <label for="duration">Duración (horas)</label>
+                <input type="number" id="duration" name="duration" min="1" placeholder="Ej. 40">
+            </div>
+
+            <div>
+                <label for="capacity">Capacidad</label>
+                <input type="number" id="capacity" name="capacity" min="1" placeholder="Máx. participantes">
+            </div>
+
+            <div>
+                <label for="price">Precio (USD)</label>
+                <input type="number" id="price" name="price" min="0" step="0.01" placeholder="0.00">
+            </div>
+
+            <div class="full">
+                <label for="description">Descripción</label>
+                <textarea id="description" name="description" placeholder="Descripción breve del curso"></textarea>
+            </div>
+
+            <div>
+                <label for="syllabus">Programa / Syllabus (archivo)</label>
+                <input type="file" id="syllabus" name="syllabus" accept=".pdf,.doc,.docx">
+            </div>
+
+            <div>
+                <label for="tags">Etiquetas</label>
+                <input type="text" id="tags" name="tags" placeholder="Separadas por comas: python, datos, inicio">
+            </div>
+
+            <div class="full">
+                <label for="notes">Notas internas</label>
+                <textarea id="notes" name="notes" placeholder="Notas visibles sólo para administradores"></textarea>
+            </div>
+
+            <div id="formErrors" class="full"></div>
+
+            <div class="full actions">
+                <button type="reset" class="btn-ghost">Restablecer</button>
+                <button type="submit" class="btn-primary">Guardar curso</button>
+            </div>
+        </form>
+
+        <div id="successMsg" style="display:none;margin-top:12px;padding:12px;border-radius:6px;background:#e6ffed;color:#0b7a2b">Curso guardado (simulación).</div>
+    </div>
+
+    <script>
+        const form = document.getElementById('courseForm');
+        const errorsBox = document.getElementById('formErrors');
+        const success = document.getElementById('successMsg');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            errorsBox.innerHTML = '';
+            success.style.display = 'none';
+
+            const data = new FormData(form);
+            const title = data.get('title').trim();
+            const category = data.get('category');
+            const instructor = data.get('instructor').trim();
+            const start = data.get('start');
+
+            const errors = [];
+            if (!title) errors.push('El título del curso es obligatorio.');
+            if (!category) errors.push('La categoría es obligatoria.');
+            if (!instructor) errors.push('El nombre del instructor es obligatorio.');
+            if (!start) errors.push('La fecha de inicio es obligatoria.');
+
+            const end = data.get('end');
+            if (start && end && new Date(end) < new Date(start)) errors.push('La fecha de fin no puede ser anterior a la fecha de inicio.');
+
+            if (errors.length) {
+                const ul = document.createElement('ul');
+                ul.className = 'error';
+                errors.forEach(msg => { const li = document.createElement('li'); li.textContent = msg; ul.appendChild(li); });
+                errorsBox.appendChild(ul);
+                window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+                return;
+            }
+
+            // Simulación de envío: mostrar resumen en consola y mensaje de éxito
+            const payload = {};
+            for (const [k,v] of data.entries()) payload[k]=v;
+            console.log('Formulario curso:', payload);
+            success.style.display = 'block';
+            window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+            form.reset();
+        });
+    </script>
+
+</html>
