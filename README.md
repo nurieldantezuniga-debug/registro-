@@ -1,2 +1,139 @@
-# registro-
-registro
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Formulario de Registro</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        margin: 40px;
+    }
+
+    nav a{
+        margin-right: 10px;
+        text-decoration: none;
+        color: blue;
+    }
+
+    h1{
+        margin-top: 20px;
+    }
+
+    h2{
+        margin-top: 20px;
+    }
+
+    label{
+        display: block;
+        margin-top: 8px;
+    }
+
+    textarea{
+        width: 400px;
+        height: 100px;
+    }
+
+    .botones{
+        margin-top: 10px;
+    }
+
+    footer{
+        margin-top: 20px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="#">Inicio</a>
+    <a href="#">Información</a>
+    <a href="#">Contacto</a>
+</nav>
+
+<hr>
+
+<h1>Formulario de Registro</h1>
+
+<h2>Datos Personales</h2>
+
+<form action="#" method="post">
+
+<label>Nombre Completo
+    <input type="text" name="nombre">
+</label>
+
+<label>Correo electronico
+    <input type="email" name="correo">
+</label>
+
+<label>Edad
+    <input type="number" name="edad">
+</label>
+
+<h3>Genero</h3>
+
+<label>
+    <input type="radio" name="genero" value="Masculino">
+    Masculino
+</label>
+
+<label>
+    <input type="radio" name="genero" value="Femenino">
+    Femenino
+</label>
+
+<label>
+    <input type="radio" name="genero" value="Otro">
+    Otro
+</label>
+
+<h3>Lenguaje de Programacion favorito</h3>
+
+<label>Selecciona uno:</label>
+
+<select name="lenguaje">
+    <option>HTML</option>
+    <option>Python</option>
+    <option>Java</option>
+    <option>C++</option>
+    <option>Otro</option>
+</select>
+
+<h3>Nivel de Experiencias</h3>
+
+<label>
+    <input type="checkbox" name="nivel" value="Principiante">
+    Principiante
+</label>
+
+<label>
+    <input type="checkbox" name="nivel" value="Intermedio">
+    Intermedio
+</label>
+
+<label>
+    <input type="checkbox" name="nivel" value="Avanzado">
+    Avanzado
+</label>
+
+<h3>Comentarios Adicionales</h3>
+
+<textarea name="comentarios" placeholder="Escribe aquí tus comentarios..."></textarea>
+
+<div class="botones">
+    <br>
+    <input type="submit" value="Enviar Registro">
+    <input type="reset" value="Limpiar Formulario">
+</div>
+
+</form>
+
+<footer>
+    <p>2026 UAM - Cuajimalpa</p>
+</footer>
+
+</body>
+</html>
